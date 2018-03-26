@@ -35,7 +35,7 @@
                 </xpath>
 
 
-                <!-- CHANGE VIEW POSSIBILITIES -->
+                <!-- CHANGE VIEW POSSIBILITIES --><!-- 
                 <xpath expr="//field[@name='journal_id']" position="replace">
                     <field name="journal_id" widget="selection" 
                         attrs="{'readonly': [ '|',
@@ -53,7 +53,7 @@
                                                 ('state', '!=', 'draft')
 
                                                 ]}"/>
-                </xpath>
+                </xpath> -->
 
 
                 <!-- HIDE NON USED FIELDS -->
