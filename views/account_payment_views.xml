@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        
+        <record model="ir.ui.view" id="vap_a_p_imp">
+            <field name="name">account.payment.vap</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                  
+                <xpath expr="//div[@name='button_box']" position="before">
+                    <div class="oe_title">
+                        <h1>
+                            <field name="concept_related" placeholder="Concepto"/>
+                        </h1>
+                    </div>
+                </xpath>
+                <xpath expr="//field[@name='payment_type']" position="after">
+                  <field name="vap_type" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                </xpath>
+
+                <!-- HIDE FIELDS -->
+                <xpath expr="//field[@name='communication']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='payment_type']" position="attributes">
+                    <attribute name="invisible">[('payment_type', '=', 'transfer')]</attribute>
+                </xpath>
+
+                <!-- <xpath expr="//field[@name='payment_transaction_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath> -->
+
+            </field>
+        </record>
+
+        <record id="view_account_internal_payment_tree" model="ir.ui.view">
+            <field name="name">account.supplier.payment.tree</field>
+            <field name="model">account.payment</field>
+            <field name="arch" type="xml">
+                <tree decoration-info="state=='draft'" decoration-muted="state=='reconciled'" edit="false">
+                    <field name="payment_date"/>
+                    <field name="name"/>
+                    <field name="communication"/>
+                    <field name="vap_type"/>
+                    <field name="journal_id"/>
+                    <field name="destination_journal_id"/>
+                    <field name="amount" sum="Amount"/>
+                    <field name="payment_method_id"/>
+                    <field name="partner_id" string="Customer"/>
+                    <field name="state"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="partner_type" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_account_internal_transfers" model="ir.actions.act_window">
+            <field name="name">Transferencias Internas</field>
+            <field name="res_model">account.payment</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="context">{'default_payment_type': 'transfer', 'default_vap_type': 'c2b', 'default_partner_type': ''}</field>
+            <field name="domain">[('payment_type', '=', 'transfer')]</field>
+            <field name="view_id" ref="view_account_internal_payment_tree"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                  Click para realizar un pago interno
+                </p><p>
+                  Los pagos se utilizan para registrar movimientos de líquido (enviar, recibir o transferir dinero). Puede procesar esos pagos por sus propios medios o utilizando los servicios instalados.
+                </p>
+            </field>
+        </record> 
+
+        <menuitem action="action_account_internal_transfers" id="account_internal_transfers_menu" name="Transferencias Internas" parent="account.menu_finance_entries" sequence="0" groups="account.group_account_user"/>
+
+        
+    </data>
+</odoo>

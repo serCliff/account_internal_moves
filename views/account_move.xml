@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+       <!--  <record model="ir.ui.view" id="vap_acc_move_tree">
+            <field name="name">account.payment.vap</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_move_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="inside">
+                    <field name="vap_type" placeholder="Concepto"/>
+                </xpath>
+            </field>
+        </record>  -->
+
+      <!--   <menuitem
+            name="Movimientos"
+            action="action_move_journal_line"
+            id="menu_action_move_journal_line_form"
+            parent="account.menu_finance_entries"
+            groups="group_account_user"
+            sequence="2"/> -->
+        
+    </data>
+</odoo>
