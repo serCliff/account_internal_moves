@@ -2,8 +2,22 @@
 <odoo>
     <data>
         
-        <record model="ir.ui.view" id="vap_a_p_imp">
-            <field name="name">account.payment.vap</field>
+        <record model="ir.ui.view" id="account_internal_transferences_payment_imp">
+            <field name="name">account.payment.internal.trans</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="payment.view_account_payment_form_inherit_payment"/>
+            <field name="arch" type="xml">
+                <!-- HIDE NON USED FIELDS -->
+                <xpath expr="//field[@name='payment_transaction_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="account_internal_transferences_imp">
+            <field name="name">account.payment.internal</field>
             <field name="model">account.payment</field>
             <field name="inherit_id" ref="account.view_account_payment_form"/>
             <field name="arch" type="xml">
@@ -11,15 +25,41 @@
                 <xpath expr="//div[@name='button_box']" position="before">
                     <div class="oe_title">
                         <h1>
-                            <field name="concept_related" placeholder="Concepto"/>
+                            <field name="concept_related" placeholder="Concepto (Ej. Entrada de efectivo, salida a bancos...)"/>
                         </h1>
                     </div>
                 </xpath>
                 <xpath expr="//field[@name='payment_type']" position="after">
+                  <field name="transfer_time"/>
                   <field name="vap_type" attrs="{'readonly': [('state', '!=', 'draft')]}" />
                 </xpath>
 
-                <!-- HIDE FIELDS -->
+
+                <!-- CHANGE VIEW POSSIBILITIES -->
+                <xpath expr="//field[@name='journal_id']" position="replace">
+                    <field name="journal_id" widget="selection" 
+                        attrs="{'readonly': [ '|',
+                                                '&amp;', ('vap_type', '!=', 'draft'), 
+                                                            ('state', '=', 'draft'),
+                                                ('state', '!=', 'draft')
+
+                                                ]}"/>           
+                </xpath> 
+                <xpath expr="//field[@name='destination_journal_id']" position="replace">
+                    <field name="destination_journal_id" widget="selection" attrs="{'required': [('payment_type', '=', 'transfer')], 'invisible': [('payment_type', '!=', 'transfer')], 
+                                'readonly': [ '|',
+                                                '&amp;', ('vap_type', '!=', 'draft'), 
+                                                            ('state', '=', 'draft'),
+                                                ('state', '!=', 'draft')
+
+                                                ]}"/>
+                </xpath>
+
+
+                <!-- HIDE NON USED FIELDS -->
+                <xpath expr="//field[@name='payment_date']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
                 <xpath expr="//field[@name='communication']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
@@ -28,9 +68,7 @@
                     <attribute name="invisible">[('payment_type', '=', 'transfer')]</attribute>
                 </xpath>
 
-                <!-- <xpath expr="//field[@name='payment_transaction_id']" position="attributes">
-                    <attribute name="invisible">1</attribute>
-                </xpath> -->
+               
 
             </field>
         </record>
@@ -75,6 +113,9 @@
         </record> 
 
         <menuitem action="action_account_internal_transfers" id="account_internal_transfers_menu" name="Transferencias Internas" parent="account.menu_finance_entries" sequence="0" groups="account.group_account_user"/>
+
+       
+
 
         
     </data>

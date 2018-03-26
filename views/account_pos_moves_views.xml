@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+       
+
+        <record id="view_pos_config_kanban" model="ir.ui.view">
+           <field name="name">pos.config.kanban.view</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_config_kanban"/>
+            <field name="arch" type="xml">
+                <button name="open_ui" position="after">
+                    <button t-if="record.current_session_state.raw_value === 'opened'"
+                            class="btn btn-info"
+                            name="open_existing_session_cb"
+                            type="object">Resumen</button>
+
+                </button>
+                <button name="open_session_cb" position="after">
+                    <button t-if="!record.current_session_id.raw_value"
+                            class="btn btn-warning"
+                            name="action_internal_transfer"
+                            type="object">Transferencias</button>
+                </button>
+            </field>
+        </record>
+        
+    </data>
+</odoo>
