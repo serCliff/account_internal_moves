@@ -9,11 +9,11 @@ This module give you a better way to make internal transfers between journals
 IMAGES: 
 
 The button that appears on pos.session kanban to make internal transfers
-[[https://github.com/serCliff/account_internal_moves/10.0/img/pos_session.png|alt=pos_session]]
+[[https://github.com/serCliff/account_internal_moves/tree/10.0/img/pos_session.png|alt=pos_session]]
 
 
 The account.payment form to make a internal transfer
-[[https://github.com/serCliff/account_internal_moves/10.0/img/pos_session.png|alt=pos_session]]
+[[https://github.com/serCliff/account_internal_moves/tree/10.0/img/pos_session.png|alt=pos_session]]
 
 
 STILL MISSING
